@@ -13,34 +13,58 @@
       align-items: center;
       min-height: 100vh;
       margin: 0;
-      background-color: #f0f2f5;
+      background-image: url('https://i.ibb.co/SJ4J9Hm/3685cce6-14c2-454c-836f-22bace48038b.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
     }
     header {
       width: 100%;
-      background-color: #343a40;
+      background-color: rgba(0, 0, 0, 0.8);
       color: #fff;
     }
     h1 {
       font-size: 2rem;
       text-align: center;
+      font-weight: bold;
+      text-transform: uppercase;
     }
     .form-container {
       max-width: 400px;
-      background: #ffffff;
+      background: rgba(0, 0, 0, 0.8);
       padding: 20px;
       border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    }
+    .form-container h3 {
+      color: #fff;
+      font-weight: bold;
+      text-align: center;
+    }
+    .form-label {
+      color: #ddd;
+      font-weight: bold;
+    }
+    .form-control {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      border: 1px solid #ddd;
+    }
+    .form-control:focus {
+      background: rgba(255, 255, 255, 0.2);
+      border-color: #007bff;
+      color: #fff;
+      box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
     }
     .btn-primary {
       background-color: #007bff;
       border-color: #007bff;
+      font-weight: bold;
+      text-transform: uppercase;
     }
     .btn-primary:hover {
       background-color: #0056b3;
       border-color: #0056b3;
-    }
-    .form-label {
-      font-weight: bold;
     }
   </style>
 </head>
@@ -49,7 +73,7 @@
     <h1>Admin Login</h1>
   </header>
   <div class="container form-container">
-    <h3 class="text-center mb-4">Sign In</h3>
+    <h3>Sign In</h3>
     <form action="adminlogin" method="post">
       <div class="mb-3">
         <label for="email" class="form-label">Email</label>

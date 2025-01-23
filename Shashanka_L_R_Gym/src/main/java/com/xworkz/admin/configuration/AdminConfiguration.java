@@ -39,7 +39,7 @@ public class AdminConfiguration implements WebMvcConfigurer {
     private String password;
 
     public AdminConfiguration() {
-        System.out.println("Configuration Constructed Created ");
+        log.info("Configuration Constructed Created ");
     }
 
     @Bean
@@ -87,6 +87,7 @@ public class AdminConfiguration implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/uploads/**")
                 .addResourceLocations("file:D:/Commons-File-Upload/");
+
     }
 
 
