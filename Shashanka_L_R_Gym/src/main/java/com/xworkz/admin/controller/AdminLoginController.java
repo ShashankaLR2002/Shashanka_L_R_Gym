@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Slf4j
@@ -22,8 +21,7 @@ public class AdminLoginController {
     AdminService adminService;
 
     @PostMapping("/adminlogin")
-    String onlogin(String email, String password, HttpSession session,    HttpServletRequest httpServletRequest
-    ) {
+    String onlogin(String email, String password, HttpSession session) {
         AdminEntity entity = adminService.adminLogin(email, password);
 
         if (entity == null) {
@@ -37,7 +35,6 @@ public class AdminLoginController {
             session.setAttribute("Loggedinadmin", entity);
             return "adminDashboard";
         }
-
         return "adminDashboard";
     }
 }

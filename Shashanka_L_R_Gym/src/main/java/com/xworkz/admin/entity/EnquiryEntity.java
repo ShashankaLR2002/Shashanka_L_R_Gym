@@ -61,4 +61,5 @@ public class EnquiryEntity {
     @OneToMany(mappedBy = "enquiryEntity", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Followuptrackdetailsentity> followupDetails = new ArrayList<>();
 
+
 }

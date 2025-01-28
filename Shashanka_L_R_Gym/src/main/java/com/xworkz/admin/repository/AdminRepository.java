@@ -1,12 +1,7 @@
 package com.xworkz.admin.repository;
 
-import com.xworkz.admin.entity.AdminEntity;
-import com.xworkz.admin.entity.EnquiryEntity;
-import com.xworkz.admin.entity.Followuptrackdetailsentity;
-import com.xworkz.admin.entity.RegistrationEntity;
-import net.bytebuddy.asm.Advice;
+import com.xworkz.admin.entity.*;
 
-import java.time.LocalDate;
 import java.util.List;
 
 public interface AdminRepository {
@@ -24,6 +19,12 @@ public interface AdminRepository {
     RegistrationEntity findregistrationbyid(int registrationId);
     List<RegistrationEntity>findallregistration();
     public boolean saveFollowupDetails(Followuptrackdetailsentity followuptrackdetailsentity) ;
-        public List<Followuptrackdetailsentity> getFollowupDetailsByEnquiryId(int enquiryId) ;
+    public List<Followuptrackdetailsentity> getFollowupDetailsByEnquiryId(int enquiryId) ;
+    public long getCountofEmail(String email) ;
+    RegistrationEntity findByEmailforuserlogin(String email) ;
+    public boolean  updateUserdetails(RegistrationEntity entity);
+    RegistrationEntity findbyidforupdateuserprofile(long loggedinuserid) ;
+    public boolean saveregistrationupdatetrackDetails(RegistrationupdatetrackdetailsEntity registrationupdatetrackdetailsEntity) ;
+    public List<RegistrationupdatetrackdetailsEntity> getregupdatetrackDetailsByEnquiryId(int enquiryId) ;
+}
 
-    }

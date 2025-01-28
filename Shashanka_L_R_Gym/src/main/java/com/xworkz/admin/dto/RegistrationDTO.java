@@ -26,5 +26,4 @@ public class RegistrationDTO {
     private double balance;
 
     private double installment;
-
 }

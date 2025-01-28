@@ -66,7 +66,6 @@
 <body>
     <nav class="navbar navbar-dark bg-dark fixed-top">
         <div class="container-fluid">
-            <!-- Hamburger Menu -->
             <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasMenu" aria-controls="offcanvasMenu" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -110,14 +109,27 @@
         <div class="card-header text-center">
             <h4>Enquiry Form</h4>
         </div>
+
         <div class="card-body">
+            <c:choose>
+                <c:when test="${not empty successMessage}">
+                    <div class="alert alert-success text-center">
+                        <c:out value="${successMessage}" />
+                    </div>
+                </c:when>
+                <c:when test="${not empty errorMessage}">
+                    <div class="alert alert-danger text-center">
+                        <c:out value="${errorMessage}" />
+                    </div>
+                </c:when>
+            </c:choose>
+
             <form action="enquirysave" method="post">
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label for="name" class="form-label">Name</label>
                         <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name" required onchange="onname()">
-                            <div id="displayName" style="color: grey; margin-top: 10px;"></div>
-
+                        <div id="displayName" style="color: grey; margin-top: 10px;"></div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <label for="email" class="form-label">Email</label>
@@ -146,42 +158,34 @@
             </form>
         </div>
     </div>
+
     <script>
+        function onname() {
+            var name = document.getElementById('name');
+            var namevalue = name.value;
 
-    function onname() {
-         var name = document.getElementById('name');
-         var namevalue = name.value;
+            if (namevalue.trim().length < 4) {
+                document.getElementById("displayName").innerHTML = "Name must be at least 4 characters long.";
+                return;
+            } else {
+                document.getElementById("displayName").innerHTML = "";
+            }
 
-         if (namevalue.trim().length < 4) {
-           document.getElementById("displayName").innerHTML = "Name must be at least 4 characters long.";
-           ajaxValidationStatus.name = false;
-           validateForm();
-           return;
-         } else {
-           document.getElementById("displayName").innerHTML = "";
-         }
+            var xhttp = new XMLHttpRequest();
+            xhttp.open("GET", "http://localhost:8080/Xworkz_CommonModule_Shashank/name/" + namevalue, true);
+            xhttp.send();
 
-         var xhttp = new XMLHttpRequest();
-         xhttp.open("GET", "http://localhost:8080/Xworkz_CommonModule_Shashank/name/" + namevalue, true);
-         xhttp.send();
+            xhttp.onload = function () {
+                if (this.status === 200) {
+                    document.getElementById("displayName").innerHTML = this.responseText;
+                }
+            };
 
-         xhttp.onload = function() {
-           if (this.status === 200) {
-             document.getElementById("displayName").innerHTML = this.responseText;
-             ajaxValidationStatus.name = this.responseText.trim() === "";
-           } else {
-             ajaxValidationStatus.name = false;
-           }
-           validateForm();
-         };
-
-         xhttp.onerror = function() {
-           ajaxValidationStatus.name = false;
-           validateForm();
-         };
-       }
-
-      </script>
+            xhttp.onerror = function () {
+                document.getElementById("displayName").innerHTML = "Error validating name.";
+            };
+        }
+    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>

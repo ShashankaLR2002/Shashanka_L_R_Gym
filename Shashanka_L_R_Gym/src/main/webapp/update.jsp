@@ -132,6 +132,15 @@
   <div class="container">
     <h3 class="text-center text-dark">Registered Details</h3>
     <table id="registrationTable" class="table">
+             <c:choose>
+               <c:when test="${not empty successMessage}">
+                 <div class="alert alert-success mt-2">${successMessage}</div>
+               </c:when>
+               <c:when test="${not empty errorMessage}">
+                 <div class="alert alert-danger mt-2">${errorMessage}</div>
+               </c:when>
+             </c:choose>
+
       <thead>
         <tr>
           <th>Name</th>
@@ -148,6 +157,8 @@
       <tbody>
         <c:forEach var="register" items="${RegisteredList}" varStatus="status">
           <tr>
+
+
             <form action="Regdataupdateaction" method="POST">
               <input type="hidden" name="id" value="${register.id}" />
               <td>${register.name}</td>
@@ -177,6 +188,8 @@
               </td>
               <td>
                 <button type="submit" class="btn-update">Update</button>
+               <a href="showregupdetails?id=${register.id}" class="btn btn-secondary btn-sm ms-2">View</a>
+
               </td>
             </form>
           </tr>

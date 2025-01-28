@@ -10,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.List;
-
 @Slf4j
 @Component
 @RequestMapping("/")
@@ -57,6 +56,7 @@ public class FollowupsController {
                 } else {
                     model.addAttribute("errorMessage", "Failed to save followup details.");
                 }
+
             } else {
                 log.error("Enquiry not found for ID: ");
                 model.addAttribute("errorMessage", "Enquiry not found.");

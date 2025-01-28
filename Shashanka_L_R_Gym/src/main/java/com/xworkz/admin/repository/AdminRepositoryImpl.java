@@ -1,13 +1,9 @@
 package com.xworkz.admin.repository;
 
-import com.xworkz.admin.entity.AdminEntity;
-import com.xworkz.admin.entity.EnquiryEntity;
-import com.xworkz.admin.entity.Followuptrackdetailsentity;
-import com.xworkz.admin.entity.RegistrationEntity;
+import com.xworkz.admin.entity.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +25,7 @@ public class AdminRepositoryImpl implements AdminRepository {
 
         try {
             transaction.begin();
-            Query query = entityManager.createNamedQuery("getPersonEntitylistbyemailforResetpassword");
+            Query query = entityManager.createNamedQuery("getAdminEntitylistbyemailforResetpassword");
             query.setParameter("email", email);
 
             List<AdminEntity> result = query.getResultList();
@@ -69,7 +65,6 @@ public class AdminRepositoryImpl implements AdminRepository {
             entityManager.close();
         }
     }
-
     @Override
     public boolean saveEnquiriesData(EnquiryEntity entity) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
@@ -89,7 +84,6 @@ public class AdminRepositoryImpl implements AdminRepository {
             entityManager.close();
         }
     }
-
     @Override
     public List<EnquiryEntity> findAllEnquiries() {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
@@ -226,6 +220,7 @@ public class AdminRepositoryImpl implements AdminRepository {
         }
     }
 
+
     @Override
     public RegistrationEntity findregistrationbyid(int id) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
@@ -352,5 +347,148 @@ public class AdminRepositoryImpl implements AdminRepository {
             entityManager.close();
         }
     }
+    @Override
+    public long getCountofEmail(String email) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        try {
+            Query query = entityManager.createNamedQuery("getAdminEntityCountByEmail");
+            query.setParameter("email", email);
 
+            long count = (long) query.getSingleResult();
+            System.out.println("Count for Email: " + count);
+
+            return count;
+        } catch (Exception e) {
+            System.out.println("Error getting count for email: " + email);
+            e.printStackTrace();
+            return 0;
+        } finally {
+            entityManager.close();
+        }
+    }
+
+    @Override
+    public RegistrationEntity findByEmailforuserlogin(String email) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+
+        try {
+            transaction.begin();
+            Query query = entityManager.createNamedQuery("getregistrationlistbyemailforuserlogin");
+            query.setParameter("email", email);
+
+            List<RegistrationEntity> result = query.getResultList();
+            transaction.commit();
+
+            if (!result.isEmpty()) {
+                return result.get(0);
+            }
+        } catch (Exception e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            entityManager.close();
+        }
+        return null;
+    }
+
+    @Override
+    public boolean updateUserdetails(RegistrationEntity entity) {
+
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+
+        try {
+            transaction.begin();
+            entityManager.merge(entity);
+            transaction.commit();
+            return true;
+        } catch (Exception e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+            return false;
+        } finally {
+            entityManager.close();
+        }
+    }
+
+    @Override
+    public RegistrationEntity findbyidforupdateuserprofile(long loggedinuserid) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+
+        try {
+            transaction.begin();
+            Query query = entityManager.createNamedQuery("getRegisteredListById");
+            query.setParameter("id", loggedinuserid);
+
+            List<RegistrationEntity> result = query.getResultList();
+            transaction.commit();
+
+            if (!result.isEmpty()) {
+                return result.get(0);
+            }
+        } catch (Exception e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            entityManager.close();
+        }
+        return null;
+    }
+
+    @Override
+    public boolean saveregistrationupdatetrackDetails(RegistrationupdatetrackdetailsEntity registrationupdatetrackdetailsEntity) {
+
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+
+        try {
+            transaction.begin();
+            entityManager.persist(registrationupdatetrackdetailsEntity);
+            transaction.commit();
+            return true;
+        } catch (Exception e) {
+            if (transaction != null && transaction.isActive()) {
+                transaction.rollback();
+            }
+            System.err.println("Error saving follow-up details: " + e.getMessage());
+            e.printStackTrace();
+            return false;
+        } finally {
+            entityManager.close();
+        }
+    }
+
+    @Override
+    public List<RegistrationupdatetrackdetailsEntity> getregupdatetrackDetailsByEnquiryId(int id) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+
+        try {
+            transaction.begin();
+            Query query = entityManager.createNamedQuery("GetRegistrationTrackdetailsByEnquiryId");
+            query.setParameter("id", id);
+
+            List<RegistrationupdatetrackdetailsEntity> resultList = query.getResultList();
+
+            query.getResultList();
+            transaction.commit();
+            return resultList;
+        } catch (Exception e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+            return new ArrayList<>();
+        } finally {
+            entityManager.close();
+        }
+}
 }

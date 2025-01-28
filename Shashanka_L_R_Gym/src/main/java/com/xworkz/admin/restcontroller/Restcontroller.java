@@ -16,6 +16,8 @@ public class Restcontroller {
 @Autowired
 AdminService adminService;
 
+
+
     @GetMapping(value = "/name/{name}", produces = MediaType.APPLICATION_JSON_VALUE)
     public String onName(@PathVariable String name, Model model) {
         long count = adminService.getCountofName(name);
@@ -28,4 +30,20 @@ AdminService adminService;
             return "  ";
         }
     }
+
+    @GetMapping(value = "/email/{email}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public String onEmail(@PathVariable String email) {
+        long count = adminService.getCountofEmail(email);
+
+        if (count > 0) {
+            System.out.println("Email already exists: " + email);
+            return "Email already exists";
+        } else {
+            System.out.println("Email does not exist: " + email);
+            return "Email does not exist";
+        }
+    }
+
+
 }
+

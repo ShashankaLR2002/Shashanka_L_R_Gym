@@ -86,7 +86,7 @@ public class AdminConfiguration implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/uploads/**")
-                .addResourceLocations("file:D:/Commons-File-Upload/");
+                .addResourceLocations("file:D:/Commons-User-File-Upload/");
 
     }
 

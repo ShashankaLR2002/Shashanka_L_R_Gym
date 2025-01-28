@@ -141,17 +141,18 @@
 
 
       <tbody>
-        <c:forEach var="register" items="${registerupDetails}" varStatus="status">
-          <tr>
-            <td class="hide-column">${register.id}</td>
-            <td class="hide-column">${register.RegistrationEntity.id}</td>
-            <td>${register.Packagename}</td>
-            <td>${register.trainer}</td>
-            <td>${register.amount}</th>
-            <td>${register.amountpaid}</th>
-            <td>${register.balance}</th>
-          </tr>
-        </c:forEach>
+       <c:forEach var="register" items="${regupDetails}" varStatus="status">
+         <tr>
+           <td class="hide-column">${register.id}</td>
+           <td class="hide-column">${register.registrationEntity.id}</td>
+           <td>${register.packageName}</td>
+           <td>${register.trainer}</td>
+           <td>${register.amount}</td>
+           <td>${register.amountPaid}</td>
+           <td>${register.balance}</td>
+         </tr>
+       </c:forEach>
+
       </tbody>
 
     </table>

@@ -137,6 +137,7 @@
   <div class="overlay"></div>
   <div class="container">
     <h3 class="text-center" style="color: #212529;">Enquired Details</h3>
+
     <form method="get" action="enquirieslistact" class="mb-3">
       <div class="d-flex justify-content-between align-items-center">
         <input type="text" class="form-control" name="search" placeholder="Search by any field" value="${param.search}">

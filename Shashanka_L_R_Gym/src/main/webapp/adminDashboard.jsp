@@ -44,7 +44,6 @@
         </div>
     </nav>
 
-
     <div class="offcanvas offcanvas-start bg-dark text-white" tabindex="-1" id="offcanvasMenu" aria-labelledby="offcanvasMenuLabel">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="offcanvasMenuLabel">Menu</h5>

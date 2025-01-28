@@ -25,8 +25,10 @@ public class Followuptrackdetailsentity {
     @Column(name ="Followedupdate")
     private LocalDate followedupdate;
 
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id")
     private EnquiryEntity enquiryEntity;
+
 }
 

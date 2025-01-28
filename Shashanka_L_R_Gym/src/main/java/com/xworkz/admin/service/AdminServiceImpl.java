@@ -2,15 +2,14 @@ package com.xworkz.admin.service;
 
 import com.xworkz.admin.dto.EnquiresDTO;
 import com.xworkz.admin.dto.RegistrationDTO;
-import com.xworkz.admin.entity.AdminEntity;
-import com.xworkz.admin.entity.EnquiryEntity;
-import com.xworkz.admin.entity.Followuptrackdetailsentity;
-import com.xworkz.admin.entity.RegistrationEntity;
+import com.xworkz.admin.dto.UserDetailsDto;
+import com.xworkz.admin.entity.*;
 import com.xworkz.admin.repository.AdminRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
@@ -20,14 +19,12 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Random;
 
-
 @Slf4j
 @Service
 public class AdminServiceImpl implements AdminService {
     String generatedPassword;
     @Autowired
     AdminRepository adminRepository;
-    AdminEntity adminEntity;
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
 
@@ -44,7 +41,6 @@ public class AdminServiceImpl implements AdminService {
             return null;
         }
         if (passwordEncoder.matches(password, entity.getPassword())) {
-            adminRepository.update(entity);
             return entity;
         }
 
@@ -157,7 +153,7 @@ public class AdminServiceImpl implements AdminService {
     public boolean saveRegistrationdata(RegistrationDTO dto) {
         StringBuilder sb = new StringBuilder();
         int length = 6;
-        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+";
+        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         Random random = new Random();
 
         for (int i = 0; i < length; i++) {
@@ -183,8 +179,55 @@ public class AdminServiceImpl implements AdminService {
         entity.setTrainer(dto.getTrainer());
         entity.setDate(LocalDate.now());
 
-        return adminRepository.saveRegisterdData(entity);
+        boolean issaved = adminRepository.saveRegisterdData(entity);
+        if (issaved) {
+            return saveRegEmail(entity.getId(), entity.getName(), entity.getEmail(), generatedPassword);
+        }
+        return false;
     }
+
+    @Override
+    public boolean saveRegEmail(int id, String name, String email, String generatedPassword) {
+        final String username = "lrshashank2002@gmail.com";
+        final String userPassword = "xrlc rqiv zsus wcnx";
+
+        Properties prop = new Properties();
+        prop.put("mail.smtp.host", "smtp.gmail.com");
+        prop.put("mail.smtp.port", "587");
+        prop.put("mail.smtp.auth", "true");
+        prop.put("mail.smtp.starttls.enable", "true");
+
+        Session session = Session.getInstance(prop, new javax.mail.Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(username, userPassword);
+            }
+        });
+
+        try {
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(username));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email));
+            message.setSubject("Registration Success");
+
+            String emailContent = "<html><body>"
+                    + "<h2>Dear " + name + ",</h2>"
+                    + "<p>Thank you for your Registration</p>"
+                    + "<p>Your Password is " + generatedPassword + "</p>"
+                    + "</body></html>";
+
+            message.setContent(emailContent, "text/html");
+
+            Transport.send(message);
+
+            return true;
+        } catch (MessagingException e) {
+            log.info("Error sending email: " + e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 
     @Override
     public List<EnquiryEntity> getFilteredEnquiries(String search) {
@@ -216,8 +259,9 @@ public class AdminServiceImpl implements AdminService {
         return adminRepository.findallregistration();
     }
 
+
     @Override
-    public boolean updateregdata(int id, String trainer,String PackageName, double amountpaid, double balance) {
+    public boolean updateregdata(int id, String trainer, String PackageName, double amountpaid, double balance) {
         RegistrationEntity entity = adminRepository.findregistrationbyid(id);
         if (entity != null) {
             entity.setPackageName(PackageName);
@@ -229,14 +273,76 @@ public class AdminServiceImpl implements AdminService {
         return false;
     }
 
+
     @Override
     public boolean saveFollowuptrackdetails(Followuptrackdetailsentity followuptrackdetailsentity) {
         return adminRepository.saveFollowupDetails(followuptrackdetailsentity);
     }
+
+
     @Override
-    public List<Followuptrackdetailsentity> getFollowupDetailsByEnquiryId(int enquiryId)
-    {
+    public List<Followuptrackdetailsentity> getFollowupDetailsByEnquiryId(int enquiryId) {
         return adminRepository.getFollowupDetailsByEnquiryId(enquiryId);
+    }
+
+
+    @Override
+    public long getCountofEmail(String email) {
+        long count = adminRepository.getCountofEmail(email);
+
+        if (count > 0) {
+            System.out.println("Email exists: " + email);
+            return count;
+        } else {
+            System.out.println("Email does not exist: " + email);
+            return 0;
+        }
+    }
+
+    @Override
+    public RegistrationEntity userLogin(String email, String password) {
+        RegistrationEntity entity = adminRepository.findByEmailforuserlogin(email);
+        if (entity == null) {
+            return null;
+        }
+        if (password.equals(entity.getPassword())) {
+            return entity;
+        }
+
+        return null;
+    }
+
+    @Override
+    public boolean updateuserdetails(int loggedinuserid, UserDetailsDto userDetailsDto, String filePath) {
+        RegistrationEntity registrationEntity = adminRepository.findregistrationbyid(loggedinuserid);
+        if (registrationEntity != null) {
+
+            registrationEntity.setName(userDetailsDto.getName());
+            registrationEntity.setEmail(userDetailsDto.getEmail());
+            registrationEntity.setPhoneNumber(userDetailsDto.getPhoneNumber());
+            registrationEntity.setFilePath(filePath);
+            registrationEntity.setAge(userDetailsDto.getAge());
+            registrationEntity.setDob(userDetailsDto.getDob());
+            registrationEntity.setCurrentHeight(userDetailsDto.getCurrentHeight());
+            registrationEntity.setCurrentWeight(userDetailsDto.getCurrentWeight());
+            registrationEntity.setEmName(userDetailsDto.getEmName());
+            registrationEntity.setEmContact(userDetailsDto.getEmContact());
+            registrationEntity.setGender(userDetailsDto.getGender());
+            return adminRepository.updateUserdetails(registrationEntity);
+        }
+
+        return false;
+
+    }
+
+    @Override
+    public boolean saveRegistrationupdatetrackdetails(RegistrationupdatetrackdetailsEntity registrationupdatetrackdetailsEntity) {
+        return adminRepository.saveregistrationupdatetrackDetails(registrationupdatetrackdetailsEntity);
+    }
+
+    @Override
+    public List<RegistrationupdatetrackdetailsEntity> getRegistartionDetailsByEnquiryId(int RegistrationID) {
+        return adminRepository.getregupdatetrackDetailsByEnquiryId(RegistrationID);
     }
 
 }

@@ -91,18 +91,16 @@
 <body>
  <nav class="navbar navbar-dark bg-dark fixed-top">
     <div class="container-fluid">
-      <!-- Hamburger Menu -->
+
       <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasMenu" aria-controls="offcanvasMenu" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <!-- Logged-in Admin Name -->
       <span class="navbar-text text-white ms-auto">
         Welcome, <c:out value="${Loggedinadmin.name}" />
       </span>
     </div>
   </nav>
 
-  <!-- Offcanvas Menu -->
   <div class="offcanvas offcanvas-start bg-dark text-white" tabindex="-1" id="offcanvasMenu" aria-labelledby="offcanvasMenuLabel">
     <div class="offcanvas-header">
       <h5 class="offcanvas-title" id="offcanvasMenuLabel">Menu</h5>

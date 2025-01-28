@@ -4,14 +4,16 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-
+import java.util.ArrayList;
+import java.util.List;
 @Entity
 @Data
 @Table(name = "registration")
 @NamedQuery(name = "getRegisteredListById", query = "SELECT r FROM RegistrationEntity r WHERE r.id = :id")
 @NamedQuery(name = "GetRegisteredList", query = "SELECT e FROM RegistrationEntity e")
-public class RegistrationEntity {
+@NamedQuery(name = "getregistrationlistbyemailforuserlogin", query = "SELECT p FROM RegistrationEntity p WHERE p.email = :email")
 
+public class RegistrationEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -55,5 +57,31 @@ public class RegistrationEntity {
     @Column(name = "RegisteredDate")
     private LocalDate date;
 
+    @Column(name = "ImageFilePath")
+    private String filePath;
+
+    @Column(name = "Age")
+    private String age;
+
+    @Column(name = "Gender")
+    private String gender;
+
+    @Column(name = "DOB")
+    private String dob;
+
+    @Column(name ="EmergencyContactName")
+    private String emName;
+
+    @Column(name ="EmergencyContactNumber")
+    private String emContact;
+
+    @Column(name ="CurrentHeight")
+    private String currentHeight;
+
+    @Column(name ="CurrentWeight")
+    private String currentWeight;
+
+    @OneToMany(mappedBy = "registrationEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<RegistrationupdatetrackdetailsEntity> followupDetails = new ArrayList<>();
 
 }
