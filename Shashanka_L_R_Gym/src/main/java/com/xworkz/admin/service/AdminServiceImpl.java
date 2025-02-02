@@ -1,15 +1,12 @@
 package com.xworkz.admin.service;
 
-import com.xworkz.admin.dto.EnquiresDTO;
-import com.xworkz.admin.dto.RegistrationDTO;
-import com.xworkz.admin.dto.UserDetailsDto;
+import com.xworkz.admin.dto.*;
 import com.xworkz.admin.entity.*;
 import com.xworkz.admin.repository.AdminRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
@@ -219,7 +216,6 @@ public class AdminServiceImpl implements AdminService {
             message.setContent(emailContent, "text/html");
 
             Transport.send(message);
-
             return true;
         } catch (MessagingException e) {
             log.info("Error sending email: " + e.getMessage());
@@ -234,19 +230,6 @@ public class AdminServiceImpl implements AdminService {
         return adminRepository.findFilteredEnquiries(search);
     }
 
-    @Override
-    public long getCountofName(String name) {
-        long count = adminRepository.getCountofName(name);
-
-        if (count > 0) {
-            System.out.println("Name exists: " + name);
-
-        } else {
-            return 0;
-        }
-
-        return count;
-    }
 
     @Override
     public RegistrationEntity findregistrationbyid(int Id) {
@@ -285,16 +268,32 @@ public class AdminServiceImpl implements AdminService {
         return adminRepository.getFollowupDetailsByEnquiryId(enquiryId);
     }
 
-
     @Override
     public long getCountofEmail(String email) {
         long count = adminRepository.getCountofEmail(email);
 
         if (count > 0) {
-            System.out.println("Email exists: " + email);
+
+            System.out.println("Email exist" + email);
             return count;
+
         } else {
-            System.out.println("Email does not exist: " + email);
+
+            return 0;
+        }
+    }
+
+    @Override
+    public long getCountofEmailforreg(String email) {
+        long countForRegistration = adminRepository.getCountofEmailforreg(email);
+
+        if (countForRegistration > 0) {
+
+            System.out.println("Email exist" + email);
+            return countForRegistration;
+
+        } else {
+
             return 0;
         }
     }
@@ -330,7 +329,6 @@ public class AdminServiceImpl implements AdminService {
             registrationEntity.setGender(userDetailsDto.getGender());
             return adminRepository.updateUserdetails(registrationEntity);
         }
-
         return false;
 
     }
@@ -345,4 +343,40 @@ public class AdminServiceImpl implements AdminService {
         return adminRepository.getregupdatetrackDetailsByEnquiryId(RegistrationID);
     }
 
+
+    @Override
+    public boolean saveSlots(String startTimings, String endTimings, String duration) {
+
+        SlotTimingsEntity entity = new SlotTimingsEntity();
+        entity.setStartTimings(startTimings);
+        entity.setEndTimings(endTimings);
+        entity.setDuration(duration);
+        return adminRepository.saveSlots(entity);
+
+    }
+
+
+    @Override
+    public boolean savetrainerdetails(String name, String phoneNumber, String slotTimings) {
+
+        TrainerinfoEntity entity = new TrainerinfoEntity();
+        entity.setName(name);
+        entity.setPhoneNumber(phoneNumber);
+        entity.setSlotTimings(slotTimings);
+        return adminRepository.savetrainerdetails(entity);
+    }
+
+
+    @Override
+    public List<SlotTimingsEntity> getAllslots() {
+        return adminRepository.findallslots();
+    }
+
+
+    @Override
+    public List<TrainerinfoEntity> getAlltrainerdetails() {
+        return adminRepository.findAlltrainerlist();
+    }
 }
+
+

@@ -66,9 +66,16 @@
                 <li class="nav-item">
                     <a class="nav-link text-white" href="enquiredlistviewing">Enquired Details</a>
                 </li>
+
+                  <li class="nav-item">
+                     <a class="nav-link text-white" href="trainersAllotmentact">Trainer Allotments</a>
+                   </li>
                 <li class="nav-item">
                     <a class="nav-link text-white" href="logoutAct">Logout</a>
                 </li>
+
+
+
             </ul>
         </div>
     </div>

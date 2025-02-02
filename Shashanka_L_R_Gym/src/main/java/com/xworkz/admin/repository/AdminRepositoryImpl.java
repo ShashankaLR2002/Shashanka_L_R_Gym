@@ -4,6 +4,7 @@ import com.xworkz.admin.entity.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +46,7 @@ public class AdminRepositoryImpl implements AdminRepository {
         return null;
     }
 
+
     @Override
     public boolean update(AdminEntity entity) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
@@ -65,6 +67,7 @@ public class AdminRepositoryImpl implements AdminRepository {
             entityManager.close();
         }
     }
+
     @Override
     public boolean saveEnquiriesData(EnquiryEntity entity) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
@@ -84,6 +87,7 @@ public class AdminRepositoryImpl implements AdminRepository {
             entityManager.close();
         }
     }
+
     @Override
     public List<EnquiryEntity> findAllEnquiries() {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
@@ -274,32 +278,6 @@ public class AdminRepositoryImpl implements AdminRepository {
 
 
     @Override
-    public long getCountofName(String name) {
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
-
-        try {
-            transaction.begin();
-            Query query = entityManager.createNamedQuery("getEnquiryEntitycountbyname");
-            query.setParameter("name", name);
-
-            long count = (long) query.getSingleResult();
-            transaction.commit();
-
-            System.out.println("Count for name: " + count);
-            return count;
-        } catch (Exception e) {
-            if (transaction.isActive()) {
-                transaction.rollback();
-            }
-            e.printStackTrace();
-            return 0;
-        } finally {
-            entityManager.close();
-        }
-    }
-
-    @Override
     public boolean saveFollowupDetails(Followuptrackdetailsentity followuptrackdetailsentity) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
@@ -347,6 +325,7 @@ public class AdminRepositoryImpl implements AdminRepository {
             entityManager.close();
         }
     }
+
     @Override
     public long getCountofEmail(String email) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
@@ -358,6 +337,26 @@ public class AdminRepositoryImpl implements AdminRepository {
             System.out.println("Count for Email: " + count);
 
             return count;
+        } catch (Exception e) {
+            System.out.println("Error getting count for email: " + email);
+            e.printStackTrace();
+            return 0;
+        } finally {
+            entityManager.close();
+        }
+    }
+
+    @Override
+    public long getCountofEmailforreg(String email) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        try {
+            Query query = entityManager.createNamedQuery("getRegistrationEntityCountByEmail");
+            query.setParameter("email", email);
+
+            long count = (long) query.getSingleResult();
+            System.out.println("Count for Email: " + count);
+            return count;
+
         } catch (Exception e) {
             System.out.println("Error getting count for email: " + email);
             e.printStackTrace();
@@ -490,5 +489,93 @@ public class AdminRepositoryImpl implements AdminRepository {
         } finally {
             entityManager.close();
         }
+    }
+
+    @Override
+    public boolean saveSlots(SlotTimingsEntity slotTimings) {
+
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+        try {
+            transaction.begin();
+            entityManager.persist(slotTimings);
+            transaction.commit();
+            return true;
+        } catch (Exception e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+            return false;
+        } finally {
+            entityManager.close();
+        }
+    }
+
+    @Override
+    public boolean savetrainerdetails(TrainerinfoEntity trainerinfoEntity) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+        try {
+            transaction.begin();
+            entityManager.persist(trainerinfoEntity);
+            transaction.commit();
+            return true;
+        } catch (Exception e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+            return false;
+        } finally {
+            entityManager.close();
+        }
+    }
+
+    @Override
+    public List<SlotTimingsEntity> findallslots() {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+
+        try {
+            transaction.begin();
+            Query query = entityManager.createNamedQuery("GetslotList");
+            List<SlotTimingsEntity> result = query.getResultList();
+            transaction.commit();
+            return result;
+
+        } catch (Exception e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            entityManager.close();
+        }
+        return null;
+
+    }
+
+    @Override
+    public List<TrainerinfoEntity> findAlltrainerlist() {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+
+        try {
+            transaction.begin();
+            Query query = entityManager.createNamedQuery("GetTrainerInfoList");
+            List<TrainerinfoEntity> result = query.getResultList();
+            transaction.commit();
+            return result;
+        } catch (Exception e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            entityManager.close();
+        }
+        return null;
+    }
 }
-}
+

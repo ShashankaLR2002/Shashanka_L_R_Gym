@@ -95,28 +95,15 @@
       <h5 class="offcanvas-title" id="offcanvasMenuLabel">Menu</h5>
       <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
-    <div class="offcanvas-body">
-      <ul class="nav flex-column">
-        <li class="nav-item">
-          <a class="nav-link text-white" href="enquiryAct">Enquiries</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-white" href="followupAct">Follow-ups</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-white" href="registrationAct">Registration</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-white" href="Regupdateact">Update</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-white" href="enquiredlistviewing">Enquired Details</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-white" href="logoutAct">Logout</a>
-        </li>
-      </ul>
-    </div>
+
+        <div class="offcanvas-body">
+            <ul class="list-unstyled">
+                <li><a href="/dashboard" class="text-white text-decoration-none d-block py-2">Dashboard</a></li>
+                <li><a href="userprofileact" class="text-white text-decoration-none d-block py-2">Profile</a></li>
+                <li><a href="viewdetails" class="text-white text-decoration-none d-block py-2">ViewDetails</a></li>
+                <li><a href="/logout" class="text-white text-decoration-none d-block py-2">Logout</a></li>
+            </ul>
+        </div>
   </div>
 
   <div class="background-image"></div>

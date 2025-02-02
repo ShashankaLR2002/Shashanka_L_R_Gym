@@ -1,7 +1,5 @@
 package com.xworkz.admin.entity;
-
 import lombok.Data;
-
 import javax.persistence.*;
 import java.time.LocalDate;
 
@@ -10,6 +8,7 @@ import java.time.LocalDate;
 @Data
 @NamedQuery(name = "GetFollowupDetailsByEnquiryId", query = "SELECT f FROM Followuptrackdetailsentity f WHERE f.enquiryEntity.id = :enquiryId")
 public class Followuptrackdetailsentity {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,10 +24,10 @@ public class Followuptrackdetailsentity {
     @Column(name ="Followedupdate")
     private LocalDate followedupdate;
 
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id")
     private EnquiryEntity enquiryEntity;
+
 
 }
 

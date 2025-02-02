@@ -186,7 +186,6 @@
                   <select class="form-select" name="status" required>
                     <option value="Pending" ${enquiry.status == 'Pending' ? 'selected' : ''}>Pending</option>
                     <option value="Completed" ${enquiry.status == 'Completed' ? 'selected' : ''}>Completed</option>
-                    <option value="In Progress" ${enquiry.status == 'In Progress' ? 'selected' : ''}>In Progress</option>
                   </select>
                 </td>
 

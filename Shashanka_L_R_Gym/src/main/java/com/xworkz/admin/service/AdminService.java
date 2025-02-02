@@ -1,10 +1,10 @@
 package com.xworkz.admin.service;
 
-import com.xworkz.admin.dto.EnquiresDTO;
-import com.xworkz.admin.dto.RegistrationDTO;
-import com.xworkz.admin.dto.UserDetailsDto;
+import com.xworkz.admin.dto.*;
 import com.xworkz.admin.entity.*;
+
 import java.util.List;
+
 public interface AdminService {
 
     AdminEntity adminLogin(String email, String password);
@@ -25,8 +25,6 @@ public interface AdminService {
 
     public List<EnquiryEntity> getFilteredEnquiries(String search);
 
-    public long getCountofName(String name);
-
     boolean updateregdata(int Registrationid, String PackageName, String trainer, double balance, double amountpaid);
 
     RegistrationEntity findregistrationbyid(int registrationId);
@@ -39,6 +37,8 @@ public interface AdminService {
 
     public long getCountofEmail(String email);
 
+    public long getCountofEmailforreg(String email);
+
     public boolean saveRegEmail(int id, String name, String email, String generatedPassword);
 
     RegistrationEntity userLogin(String email, String password);
@@ -48,5 +48,14 @@ public interface AdminService {
     public boolean saveRegistrationupdatetrackdetails(RegistrationupdatetrackdetailsEntity registrationupdatetrackdetailsEntity);
 
     public List<RegistrationupdatetrackdetailsEntity> getRegistartionDetailsByEnquiryId(int RegistrationID);
+
+    public boolean saveSlots(String startTimings, String endTimings, String duration);
+
+    public boolean savetrainerdetails(String name, String phoneNumber, String slotTimings);
+
+    public List<SlotTimingsEntity> getAllslots();
+
+    public List<TrainerinfoEntity> getAlltrainerdetails();
+
 
 }

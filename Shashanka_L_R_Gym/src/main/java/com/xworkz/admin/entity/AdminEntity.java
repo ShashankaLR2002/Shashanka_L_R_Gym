@@ -1,7 +1,5 @@
 package com.xworkz.admin.entity;
-
 import lombok.Data;
-
 import javax.persistence.*;
 @Data
 @Entity
@@ -24,7 +22,4 @@ public class AdminEntity extends AbstractAuditEntity{
 
     @Column(name = "Logincount")
     private int loginCount;
-
-
-
 }

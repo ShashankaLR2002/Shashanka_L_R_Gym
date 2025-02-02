@@ -169,6 +169,7 @@
                 <input type="text" name="phoneNumber" value="${register.phoneNumber}" class="form-control mb-2" readonly placeholder="Phone Number" />
               </td>
               <td>
+
                 <select name="PackageName" class="form-control mb-2 package" onchange="updateAmountAndBalance(this)">
                   <option value="Silver" ${register.packageName == 'Silver' ? 'selected' : ''}>Silver</option>
                   <option value="Premium" ${register.packageName == 'Premium' ? 'selected' : ''}>Premium</option>
@@ -180,9 +181,11 @@
               <td>
                 <input type="number" name="amount" value="${register.amount}" class="form-control mb-2 amount" readonly />
               </td>
+
               <td>
                 <input type="number" name="amountpaid" value="${register.amountpaid}" class="form-control mb-2 amountpaid" placeholder="Amount Paid" step="0.01" oninput="updateBalance(this)" />
               </td>
+
               <td>
                 <input type="number" name="balance" value="${register.balance}" class="form-control mb-2 balance" readonly />
               </td>

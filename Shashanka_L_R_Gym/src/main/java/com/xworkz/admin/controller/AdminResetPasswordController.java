@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
 @Slf4j
 @Component
 @RequestMapping("/")
@@ -21,7 +22,6 @@ public class AdminResetPasswordController {
 
     @PostMapping("/adminpasswordset")
     String resetPassword(String email, String newPassword) {
-
         AdminEntity entity = adminService.resetPassword(email, newPassword);
         if (entity != null) {
             return "adminDashboard";

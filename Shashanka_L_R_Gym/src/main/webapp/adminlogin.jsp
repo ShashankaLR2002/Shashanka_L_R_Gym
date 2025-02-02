@@ -40,58 +40,90 @@
 <body>
     <div class="form-container">
         <h3 class="text-center">Admin Login</h3>
-        <form action="adminlogin" method="post">
+        <form action="adminlogin" method="post" onsubmit="return removeButtonOnSubmit()">
             <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
                 <input type="email" id="email" name="email" class="form-control" required onchange="onEmail()">
-                <div id="displayemail" style="color: grey; margin-top: 10px;"></div>
+                <div id="displayemail" class="error-message" style="color: grey; margin-top: 10px;"></div>
             </div>
 
             <div class="mb-3">
                 <label for="password" class="form-label">Password</label>
-                <input type="password" id="password" name="password" class="form-control" required>
-
+                <input type="password" id="password" name="password" class="form-control" required oninput="validateForm()">
+                <div id="displaypassword" class="error-message" style="color: grey; margin-top: 10px;"></div>
             </div>
-            <button type="submit" class="btn btn-primary w-100">Sign In</button>
+                <c:if test="${not empty error}">
+                          <div style="color: grey; margin-bottom: 10px;">${error}</div>
+                      </c:if>
+            <button type="submit" id="submitBtn" class="btn btn-primary w-100">Sign In</button>
         </form>
     </div>
+
     <script>
+        window.onload = function() {
+            document.getElementById("submitBtn").disabled = true;
+        };
 
-    function onEmail() {
-      var email = document.getElementById('email');
-      emailvalue = email.value;
+        let ajaxValidationStatus = {
+            email: false // We only validate email through AJAX
+        };
 
-      if (!emailvalue.includes('@gmail.com') && !emailvalue.includes('@yahoo.com') &&
-          !emailvalue.includes('@outlook.com') && !emailvalue.includes('@hotmail.com') &&
-          !emailvalue.includes('.edu') && !emailvalue.includes('.org') &&
-          !emailvalue.includes('.info') && !emailvalue.includes('.net')) {
-        document.getElementById("displayemail").innerHTML = "Enter a valid email address.";
-        ajaxValidationStatus.email = false;
-        validateForm();
-        return;
-      } else {
-        document.getElementById("displayemail").innerHTML = "";
-      }
+        function validateForm() {
+            let hasError = false;
 
-      var xhttp = new XMLHttpRequest();
-      xhttp.open("GET", "http://localhost:8080/Xworkz_CommonModule_Shashank/email/" + emailvalue, true);
-      xhttp.send();
+            // Check if email validation is passed
+            if (!ajaxValidationStatus.email) {
+                hasError = true;
+            }
 
-      xhttp.onload = function() {
-        if (this.status === 200) {
-          document.getElementById("displayemail").innerHTML = this.responseText;
-          ajaxValidationStatus.email = this.responseText.trim() === "";
-        } else {
-          ajaxValidationStatus.email = false;
+            // Check if password field is empty
+
+            // Enable or disable the submit button
+            let submitBtn = document.getElementById("submitBtn");
+            submitBtn.disabled = hasError;
+
+            return !hasError;
         }
-        validateForm();
-      };
 
-      xhttp.onerror = function() {
-        ajaxValidationStatus.email = false;
-        validateForm();
-      };
-    }
+        function onEmail() {
+            var email = document.getElementById('email');
+            var emailValue = email.value;
+            var displayEmail = document.getElementById("displayemail");
+
+            // Basic email validation
+            if (!emailValue.includes('@gmail.com') && !emailValue.includes('@yahoo.com') &&
+                !emailValue.includes('@outlook.com') && !emailValue.includes('@hotmail.com') &&
+                !emailValue.includes('.edu') && !emailValue.includes('.org') &&
+                !emailValue.includes('.info') && !emailValue.includes('.net')) {
+                displayEmail.innerHTML = "Enter a valid email address.";
+                ajaxValidationStatus.email = false;
+                validateForm();
+                return;
+            } else {
+                displayEmail.innerHTML = ""; // Clear error message
+            }
+
+            // AJAX request to validate email
+            var xhttp = new XMLHttpRequest();
+            xhttp.open("GET", "http://localhost:8080/Shashanka_L_R_Gym/email/" + emailValue, true);
+            xhttp.send();
+
+            xhttp.onload = function() {
+                if (this.status === 200) {
+                    displayEmail.innerHTML = this.responseText;
+                    ajaxValidationStatus.email = (this.responseText.trim() === ""); // Email is valid only if response is empty
+                } else {
+                    ajaxValidationStatus.email = false;
+                }
+                validateForm(); // Re-check form after AJAX response
+            };
+
+            xhttp.onerror = function() {
+                ajaxValidationStatus.email = false;
+                validateForm();
+            };
+        }
+
 
     </script>
 </body>

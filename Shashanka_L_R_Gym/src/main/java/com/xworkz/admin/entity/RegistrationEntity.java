@@ -6,12 +6,14 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
 @Entity
 @Data
 @Table(name = "registration")
 @NamedQuery(name = "getRegisteredListById", query = "SELECT r FROM RegistrationEntity r WHERE r.id = :id")
 @NamedQuery(name = "GetRegisteredList", query = "SELECT e FROM RegistrationEntity e")
 @NamedQuery(name = "getregistrationlistbyemailforuserlogin", query = "SELECT p FROM RegistrationEntity p WHERE p.email = :email")
+@NamedQuery(name = "getRegistrationEntityCountByEmail", query = "SELECT COUNT(a) FROM RegistrationEntity a WHERE a.email = :email")
 
 public class RegistrationEntity {
     @Id

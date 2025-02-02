@@ -13,8 +13,6 @@
             margin: 0;
             padding: 0;
         }
-
-
         .profile-container {
             max-width: 800px;
             background: #ffffff;
@@ -32,7 +30,6 @@
             border-radius: 50%;
             border: 2px solid #007bff;
         }
-
 
         .form-section {
             border-top: 1px solid #e9ecef;
@@ -53,7 +50,6 @@
             border-color: #007bff;
             box-shadow: none;
         }
-
     </style>
     <title>User Profile</title>
 </head>
@@ -83,18 +79,17 @@
             <h5 class="offcanvas-title" id="offcanvasMenuLabel">Menu</h5>
             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
-
         <div class="offcanvas-body">
             <ul class="list-unstyled">
                 <li><a href="/dashboard" class="text-white text-decoration-none d-block py-2">Dashboard</a></li>
                 <li><a href="userprofileact" class="text-white text-decoration-none d-block py-2">Profile</a></li>
-                <li><a href="/settings" class="text-white text-decoration-none d-block py-2">Settings</a></li>
+                <li><a href="viewdetails" class="text-white text-decoration-none d-block py-2">Viewdetails</a></li>
+                <li><a href="" class="text-white text-decoration-none d-block py-2">TrainerAllotments</a></li>
                 <li><a href="/logout" class="text-white text-decoration-none d-block py-2">Logout</a></li>
+
             </ul>
             </div>
-
     </div>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>

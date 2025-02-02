@@ -1,7 +1,5 @@
 package com.xworkz.admin.entity;
-
 import lombok.Data;
-
 import javax.persistence.*;
 import java.time.LocalDate;
 

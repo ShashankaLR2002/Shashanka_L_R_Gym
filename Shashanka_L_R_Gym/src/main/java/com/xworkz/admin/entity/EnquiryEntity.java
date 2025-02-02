@@ -17,6 +17,7 @@ import java.util.List;
         "e.enquireddate LIKE :search OR " +
         "e.enquiredby LIKE :search OR " +
         "e.status LIKE :search")
+
 @NamedQuery(name = "getEnquiryEntitycountbyname", query = "SELECT COUNT(e) FROM EnquiryEntity e WHERE e.name = :name")
 
 public class EnquiryEntity {

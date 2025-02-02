@@ -53,7 +53,7 @@ public class UpdateController {
 
             RegistrationEntity enquiry = adminService.findregistrationbyid(id);
             if (enquiry != null) {
-                registrationupdatetrackdetailsEntity.setRegistrationEntity(enquiry);
+               registrationupdatetrackdetailsEntity.setRegistrationEntity(enquiry);
                 boolean savedregUp = adminService.saveRegistrationupdatetrackdetails(registrationupdatetrackdetailsEntity);
                 if (savedregUp) {
                     model.addAttribute("successMessage", "Details Updated successfully");
