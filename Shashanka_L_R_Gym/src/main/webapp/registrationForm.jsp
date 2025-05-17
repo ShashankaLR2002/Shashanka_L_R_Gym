@@ -18,6 +18,7 @@
             font-family: 'Arial', sans-serif;
             position: relative;
         }
+
         .overlay {
             position: absolute;
             top: 0;
@@ -27,6 +28,7 @@
             background: rgba(0, 0, 0, 0.3);
             z-index: 1;
         }
+
         .container {
             background: rgba(0, 0, 0, 0.6);
             color: #fff;
@@ -38,17 +40,20 @@
             z-index: 2;
             position: relative;
         }
+
         .header h3 {
             text-align: center;
             font-weight: bold;
             margin-bottom: 15px;
             color: #fff;
         }
+
         label {
             font-size: 14px;
             font-weight: bold;
             color: #ccc;
         }
+
         .form-control {
             background-color: rgba(255, 255, 255, 0.1);
             color: #fff;
@@ -63,6 +68,7 @@
             color: #fff;
             box-shadow: none;
         }
+
         .btn-primary {
             width: 100%;
             padding: 10px;
@@ -72,6 +78,7 @@
             background-color: #007bff;
             border: none;
         }
+
         .btn-primary:hover {
             background-color: #0056b3;
         }
@@ -86,6 +93,7 @@
             background-position: center;
             z-index: 0;
         }
+
         .error-message {
             color: red;
             font-size: 0.875rem;
@@ -93,6 +101,49 @@
     </style>
 </head>
 <body>
+<nav class="navbar navbar-dark bg-dark fixed-top">
+    <div class="container-fluid">
+      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasMenu" aria-controls="offcanvasMenu" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <span class="navbar-text text-white ms-auto">
+        Welcome, <c:out value="${Loggedinadmin.name}" />
+      </span>
+    </div>
+  </nav>
+<div class="offcanvas offcanvas-start bg-dark text-white" tabindex="-1" id="offcanvasMenu" aria-labelledby="offcanvasMenuLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasMenuLabel">Menu</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+
+        <div class="offcanvas-body">
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="enquiryAct">Enquiries</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="followupAct">Follow-ups</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="registrationAct">Registration</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="Regupdateact">Update</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="enquiredlistviewing">Enquired Details</a>
+                </li>
+                <li class="nav-item">
+                                     <a class="nav-link text-white" href="trainersAllotmentact">Trainer Allotments</a>
+                                   </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="logoutAct">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
     <div class="background-image"></div>
     <div class="overlay"></div>
 
@@ -109,6 +160,7 @@
         <form action="register" method="post" onsubmit="return validateForm()">
             <div class="row g-3">
                 <div class="col-md-6 form-group">
+
                     <label for="name">Name</label>
                     <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name" required onchange="onName()">
                     <span id="displayName" class="error-message"></span>
@@ -144,6 +196,11 @@
                     <input type="number" step="0.01" class="form-control" id="discount" name="discount" placeholder="Enter discount" required oninput="calculateFields()">
                 </div>
 
+                 <div class="col-md-6 form-group">
+                  <label for="amountpaid">Amount Paid</label>
+                  <input type="number" step="0.01" class="form-control" id="amountpaid" name="amountpaid" placeholder="Enter Amount Paid" oninput="calculateFields()" required>
+                 </div>
+
                 <div class="col-md-6 form-group">
                     <label for="balance">Balance</label>
                     <input type="number" step="0.01" class="form-control" id="balance" name="balance" readonly required>
@@ -152,9 +209,9 @@
                 <div class="col-md-6 form-group">
                     <label for="numInstallments">Number of Installments</label>
                     <select class="form-control" id="numInstallments" name="numInstallments" onchange="calculateFields()" required>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3" selected>3</option>
+                        <option value="1" style="color: black;">1</option>
+                        <option value="2"style="color: black;">2</option>
+                        <option value="3" style="color: black;"selected>3</option>
                     </select>
                 </div>
 
@@ -175,11 +232,6 @@
                 </div>
 
                 <div class="col-md-6 form-group">
-                    <label for="amountpaid">Amount Paid</label>
-                    <input type="number" step="0.01" class="form-control" id="amountpaid" name="amountpaid" placeholder="Enter Amount Paid" oninput="calculateFields()" required>
-                </div>
-
-                <div class="col-md-6 form-group">
                     <label for="fullPayment">Full Payment Made</label>
                     <div class="form-check">
                         <input type="checkbox" class="form-check-input" id="fullPayment" name="fullPayment" onchange="toggleFullPayment()">
@@ -189,7 +241,6 @@
 
             <button type="submit" id="submitBtn" class="btn btn-primary mt-4" disabled>Save</button>
         </form>
-
 
     </div>
 
@@ -215,12 +266,14 @@
                 }
             }
 
+
             for (let field in ajaxValidationStatus) {
                 if (!ajaxValidationStatus[field]) {
                     hasError = true;
                     break;
                 }
             }
+
 
             document.getElementById("submitBtn").disabled = hasError;
 
@@ -255,9 +308,11 @@
                document.getElementById("displayemail").innerHTML = "";
              }
 
+
              var xhttp = new XMLHttpRequest();
              xhttp.open("GET", "http://localhost:8080/Shashanka_L_R_Gym/email/" + emailvalue, true);
              xhttp.send();
+
 
              xhttp.onload = function() {
                if (this.status === 200) {
@@ -268,6 +323,7 @@
                }
                validateForm();
              };
+
 
              xhttp.onerror = function() {
                ajaxValidationStatus.email = false;
@@ -289,20 +345,28 @@
             validateForm();
         }
 
-        function calculateFields() {
-            const packageAmount = parseFloat(document.getElementById('amount').value) || 0;
-            const discount = parseFloat(document.getElementById('discount').value) || 0;
-            const amountPaid = parseFloat(document.getElementById('amountpaid').value) || 0;
-            const numInstallments = parseInt(document.getElementById('numInstallments').value) || 1;
 
-            const discountAmount = (packageAmount * discount) / 100;
-            let balance = packageAmount - discountAmount - amountPaid;
-            balance = Math.max(0, balance);
-            const installment = balance / numInstallments;
+       function calculateFields() {
+           const packageAmount = parseFloat(document.getElementById('amount').value) || 0;
+           const discount = parseFloat(document.getElementById('discount').value) || 0;
+           const amountPaid = parseFloat(document.getElementById('amountpaid').value) || 0;
+           const numInstallments = parseInt(document.getElementById('numInstallments').value) || 1;
 
-            document.getElementById('balance').value = balance.toFixed(2);
-            document.getElementById('installment').value = installment.toFixed(2);
-        }
+           const discountAmount = (packageAmount * discount) / 100;
+           let balance = packageAmount - discountAmount - amountPaid;
+           balance = Math.max(0, balance);
+
+           let installment = balance / numInstallments;
+
+           if (installment % 1 >= 0.5) {
+               installment = Math.ceil(installment);
+           } else {
+               installment = Math.floor(installment);
+           }
+
+           document.getElementById('balance').value = balance.toFixed(2);
+           document.getElementById('installment').value = installment;
+       }
 
         function updatePackageAmount() {
             const packageSelect = document.getElementById('PackageName');
@@ -314,13 +378,14 @@
 
             const totalAmount = packageValue + trainerFee;
             document.getElementById('amount').value = totalAmount.toFixed(2);
-
             calculateFields();
         }
 
-        document.getElementById('trainer').addEventListener('input', updatePackageAmount);
 
+
+        document.getElementById('trainer').addEventListener('input', updatePackageAmount);
         function toggleFullPayment() {
+
             const isFullPayment = document.getElementById('fullPayment').checked;
 
             if (isFullPayment) {
@@ -335,11 +400,11 @@
                 calculateFields();
             }
         }
-
         document.getElementById('amountpaid').addEventListener('input', calculateFields);
         document.getElementById('discount').addEventListener('input', calculateFields);
         document.getElementById('numInstallments').addEventListener('input', calculateFields);
     </script>
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 </body>

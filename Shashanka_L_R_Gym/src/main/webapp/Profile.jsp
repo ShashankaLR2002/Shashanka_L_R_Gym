@@ -76,7 +76,8 @@
 </head>
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <!-- Navigation Bar (Copied from Follow-up Details) -->
+    <nav class="navbar navbar-dark bg-dark fixed-top">
         <div class="container-fluid">
             <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasMenu" aria-controls="offcanvasMenu" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -95,9 +96,9 @@
 
         <div class="offcanvas-body">
             <ul class="list-unstyled">
-                <li><a href="/dashboard" class="text-white text-decoration-none d-block py-2">Dashboard</a></li>
+                <li><a href="ondashboard" class="text-white text-decoration-none d-block py-2">Dashboard</a></li>
                 <li><a href="userprofileact" class="text-white text-decoration-none d-block py-2">Profile</a></li>
-                <li><a href="/settings" class="text-white text-decoration-none d-block py-2">Settings</a></li>
+                <li><a href="viewdetails" class="text-white text-decoration-none d-block py-2">ViewDetails</a></li>
                 <li><a href="/logout" class="text-white text-decoration-none d-block py-2">Logout</a></li>
             </ul>
         </div>

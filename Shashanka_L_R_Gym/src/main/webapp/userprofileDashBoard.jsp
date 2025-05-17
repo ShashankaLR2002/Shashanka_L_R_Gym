@@ -12,7 +12,9 @@
             background: #f7f9fc;
             margin: 0;
             padding: 0;
+            background: url('https://i.ibb.co/SJ4J9Hm/3685cce6-14c2-454c-836f-22bace48038b.jpg') center/cover no-repeat;
         }
+
         .profile-container {
             max-width: 800px;
             background: #ffffff;
@@ -21,7 +23,6 @@
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
             margin: 50px auto;
         }
-
 
         .profile-picture img {
             width: 120px;
@@ -55,6 +56,8 @@
 </head>
 
 <body>
+
+    <!-- Navigation Bar -->
     <nav class="navbar navbar-dark bg-dark">
         <div class="container-fluid d-flex align-items-center">
             <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasMenu" aria-controls="offcanvasMenu" aria-label="Toggle navigation">
@@ -64,35 +67,36 @@
             <div class="d-flex align-items-center ms-auto">
                 <c:if test="${not empty imageName}">
                     <img src="${pageContext.request.contextPath}/uploads/${imageName}" alt="Profile Picture" class="rounded-circle me-2" width="40" height="40" style="object-fit: cover;">
-            </c:if>
+                </c:if>
 
                 <span class="navbar-text text-white">
                     Welcome, <c:out value="${Loggedinuser.name}" />
                 </span>
-
             </div>
         </div>
     </nav>
 
+    <!-- Offcanvas Sidebar Menu -->
     <div class="offcanvas offcanvas-start bg-dark text-white" tabindex="-1" id="offcanvasMenu" aria-labelledby="offcanvasMenuLabel">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="offcanvasMenuLabel">Menu</h5>
             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
+
         <div class="offcanvas-body">
             <ul class="list-unstyled">
-                <li><a href="/dashboard" class="text-white text-decoration-none d-block py-2">Dashboard</a></li>
+                <li><a href="ondashboard" class="text-white text-decoration-none d-block py-2">Dashboard</a></li>
                 <li><a href="userprofileact" class="text-white text-decoration-none d-block py-2">Profile</a></li>
-                <li><a href="viewdetails" class="text-white text-decoration-none d-block py-2">Viewdetails</a></li>
-                <li><a href="" class="text-white text-decoration-none d-block py-2">TrainerAllotments</a></li>
-                <li><a href="/logout" class="text-white text-decoration-none d-block py-2">Logout</a></li>
-
+                <li><a href="viewdetails" class="text-white text-decoration-none d-block py-2">View Details</a></li>
             </ul>
-            </div>
+        </div>
     </div>
+
+    <!-- Centered Text "IRON Beast Fitness" -->
+    <div class="d-flex justify-content-center align-items-center" style="height: 60vh;">
+        <h1 class="text-white fw-bold">IRON Beast Fitness</h1>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
 </body>
-
-
 </html>

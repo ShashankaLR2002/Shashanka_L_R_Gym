@@ -96,12 +96,12 @@
       </span>
     </div>
   </nav>
-
   <div class="offcanvas offcanvas-start bg-dark text-white" tabindex="-1" id="offcanvasMenu" aria-labelledby="offcanvasMenuLabel">
     <div class="offcanvas-header">
       <h5 class="offcanvas-title" id="offcanvasMenuLabel">Menu</h5>
       <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
+
     <div class="offcanvas-body">
       <ul class="nav flex-column">
         <li class="nav-item">
@@ -120,6 +120,9 @@
           <a class="nav-link text-white" href="enquiredlistviewing">Enquired Details</a>
         </li>
         <li class="nav-item">
+          <a class="nav-link text-white" href="trainersAllotmentact">Trainer Allotments</a>
+          </li>
+        <li class="nav-item">
           <a class="nav-link text-white" href="logoutAct">Logout</a>
         </li>
       </ul>
@@ -131,74 +134,79 @@
 
   <div class="container">
     <h3 class="text-center text-dark">Registered Details</h3>
-    <table id="registrationTable" class="table">
-             <c:choose>
-               <c:when test="${not empty successMessage}">
-                 <div class="alert alert-success mt-2">${successMessage}</div>
-               </c:when>
-               <c:when test="${not empty errorMessage}">
-                 <div class="alert alert-danger mt-2">${errorMessage}</div>
-               </c:when>
-             </c:choose>
+     <form method="GET" action="getreglist" class="mb-3">
+          <div class="input-group">
+            <input type="text" class="form-control" name="search" placeholder="Search by any field" value="${param.search}">
+            <button type="submit" class="btn btn-primary">Filter</button>
+          </div>
+        </form>
 
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Phone Number</th>
-          <th>Package</th>
-          <th>Trainer</th>
-          <th>Amount</th>
-          <th>Amount Paid</th>
-          <th>Balance</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <c:forEach var="register" items="${RegisteredList}" varStatus="status">
+    <c:choose>
+      <c:when test="${not empty successMessage}">
+        <div class="alert alert-success mt-2">${successMessage}</div>
+      </c:when>
+      <c:when test="${not empty errorMessage}">
+        <div class="alert alert-danger mt-2">${errorMessage}</div>
+      </c:when>
+    </c:choose>
+
+    <c:if test="${not empty registrationentityforupdate}">
+      <table id="registrationTable" class="table">
+        <thead>
           <tr>
-
-
-            <form action="Regdataupdateaction" method="POST">
-              <input type="hidden" name="id" value="${register.id}" />
-              <td>${register.name}</td>
-              <td>
-                <input type="email" name="email" value="${register.email}" class="form-control mb-2" readonly placeholder="Email" />
-              </td>
-              <td>
-                <input type="text" name="phoneNumber" value="${register.phoneNumber}" class="form-control mb-2" readonly placeholder="Phone Number" />
-              </td>
-              <td>
-
-                <select name="PackageName" class="form-control mb-2 package" onchange="updateAmountAndBalance(this)">
-                  <option value="Silver" ${register.packageName == 'Silver' ? 'selected' : ''}>Silver</option>
-                  <option value="Premium" ${register.packageName == 'Premium' ? 'selected' : ''}>Premium</option>
-                </select>
-              </td>
-              <td>
-                <input type="text" name="trainer" value="${register.trainer}" class="form-control mb-2" placeholder="Trainer" />
-              </td>
-              <td>
-                <input type="number" name="amount" value="${register.amount}" class="form-control mb-2 amount" readonly />
-              </td>
-
-              <td>
-                <input type="number" name="amountpaid" value="${register.amountpaid}" class="form-control mb-2 amountpaid" placeholder="Amount Paid" step="0.01" oninput="updateBalance(this)" />
-              </td>
-
-              <td>
-                <input type="number" name="balance" value="${register.balance}" class="form-control mb-2 balance" readonly />
-              </td>
-              <td>
-                <button type="submit" class="btn-update">Update</button>
-               <a href="showregupdetails?id=${register.id}" class="btn btn-secondary btn-sm ms-2">View</a>
-
-              </td>
-            </form>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone Number</th>
+            <th>Package</th>
+            <th>Trainer</th>
+            <th>Amount</th>
+            <th>Amount Paid</th>
+            <th>Balance</th>
+            <th>Actions</th>
           </tr>
-        </c:forEach>
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          <c:forEach var="register" items="${registrationentityforupdate}" varStatus="status">
+            <tr>
+              <form action="Regdataupdateaction" method="POST">
+                <input type="hidden" name="id" value="${register.id}" />
+                <td>${register.name}</td>
+                <td>
+                  <input type="email" name="email" value="${register.email}" class="form-control mb-2" readonly placeholder="Email" />
+                </td>
+                <td>
+                  <input type="text" name="phoneNumber" value="${register.phoneNumber}" class="form-control mb-2" readonly placeholder="Phone Number" />
+                </td>
+                <td>
+                  <select name="PackageName" class="form-control mb-2 package" onchange="updateAmountAndBalance(this)">
+                    <option value="Silver" ${register.packageName == 'Silver' ? 'selected' : ''}>Silver</option>
+                    <option value="Premium" ${register.packageName == 'Premium' ? 'selected' : ''}>Premium</option>
+                  </select>
+                </td>
+                <td>
+                  <input type="text" name="trainer" value="${register.trainer}" class="form-control mb-2" placeholder="Trainer" />
+                </td>
+                <td>
+                  <input type="number" name="amount" value="${register.amount}" class="form-control mb-2 amount" readonly />
+                </td>
+
+                <td>
+                  <input type="number" name="amountpaid" value="${register.amountpaid}" class="form-control mb-2 amountpaid" placeholder="Amount Paid" step="0.01" oninput="updateBalance(this)" />
+                </td>
+
+                <td>
+                  <input type="number" name="balance" value="${register.balance}" class="form-control mb-2 balance" readonly />
+                </td>
+                <td>
+                  <button type="submit" class="btn-update">Update</button>
+                  <a href="showregupdetails?id=${register.id}" class="btn btn-secondary btn-sm ms-2">View</a>
+                </td>
+              </form>
+            </tr>
+          </c:forEach>
+        </tbody>
+      </table>
+    </c:if>
   </div>
 
   <script>

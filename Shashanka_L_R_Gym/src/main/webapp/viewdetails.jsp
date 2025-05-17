@@ -98,10 +98,9 @@
 
         <div class="offcanvas-body">
             <ul class="list-unstyled">
-                <li><a href="/dashboard" class="text-white text-decoration-none d-block py-2">Dashboard</a></li>
+                <li><a href="ondashboard" class="text-white text-decoration-none d-block py-2">Dashboard</a></li>
                 <li><a href="userprofileact" class="text-white text-decoration-none d-block py-2">Profile</a></li>
                 <li><a href="viewdetails" class="text-white text-decoration-none d-block py-2">ViewDetails</a></li>
-                <li><a href="/logout" class="text-white text-decoration-none d-block py-2">Logout</a></li>
             </ul>
         </div>
   </div>

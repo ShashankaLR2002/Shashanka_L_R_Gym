@@ -65,20 +65,17 @@
         };
 
         let ajaxValidationStatus = {
-            email: false // We only validate email through AJAX
+            email: false
         };
 
         function validateForm() {
             let hasError = false;
 
-            // Check if email validation is passed
             if (!ajaxValidationStatus.email) {
                 hasError = true;
             }
 
-            // Check if password field is empty
 
-            // Enable or disable the submit button
             let submitBtn = document.getElementById("submitBtn");
             submitBtn.disabled = hasError;
 
@@ -100,10 +97,9 @@
                 validateForm();
                 return;
             } else {
-                displayEmail.innerHTML = ""; // Clear error message
+                displayEmail.innerHTML = "";
             }
 
-            // AJAX request to validate email
             var xhttp = new XMLHttpRequest();
             xhttp.open("GET", "http://localhost:8080/Shashanka_L_R_Gym/email/" + emailValue, true);
             xhttp.send();
@@ -111,11 +107,11 @@
             xhttp.onload = function() {
                 if (this.status === 200) {
                     displayEmail.innerHTML = this.responseText;
-                    ajaxValidationStatus.email = (this.responseText.trim() === ""); // Email is valid only if response is empty
+                    ajaxValidationStatus.email = (this.responseText.trim() === "");
                 } else {
                     ajaxValidationStatus.email = false;
                 }
-                validateForm(); // Re-check form after AJAX response
+                validateForm();
             };
 
             xhttp.onerror = function() {

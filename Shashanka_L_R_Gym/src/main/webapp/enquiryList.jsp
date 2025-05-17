@@ -127,6 +127,9 @@
           <a class="nav-link text-white" href="enquiredlistviewing">Enquired Details</a>
         </li>
         <li class="nav-item">
+                             <a class="nav-link text-white" href="trainersAllotmentact">Trainer Allotments</a>
+                           </li>
+        <li class="nav-item">
           <a class="nav-link text-white" href="logoutAct">Logout</a>
         </li>
       </ul>
@@ -158,7 +161,6 @@
       <table id="enquiryTable" class="table">
         <thead>
           <tr>
-            <th>Enquiry ID</th>
             <th>Name</th>
             <th>Phone Number</th>
             <th>Area</th>
@@ -170,11 +172,11 @@
           </tr>
         </thead>
         <tbody>
+
           <c:forEach var="enquiry" items="${enquiryList}" varStatus="status">
 
             <tr>
               <form action="updateStatus" method="POST">
-                <td>${enquiry.id}</td>
                 <td>${enquiry.name}</td>
                 <td>${enquiry.phonenumber}</td>
                 <td>${enquiry.area}</td>
@@ -188,7 +190,6 @@
                     <option value="Completed" ${enquiry.status == 'Completed' ? 'selected' : ''}>Completed</option>
                   </select>
                 </td>
-
                 <td>
                   <textarea class="form-control" name="reason" rows="1" required>${enquiry.reason}</textarea>
                 </td>
@@ -199,6 +200,7 @@
               </form>
             </tr>
           </c:forEach>
+
         </tbody>
       </table>
     </form>

@@ -7,6 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
+
+
         body {
             display: flex;
             justify-content: center;
@@ -14,6 +16,8 @@
             height: 100vh;
             background: url('https://i.ibb.co/SJ4J9Hm/3685cce6-14c2-454c-836f-22bace48038b.jpg') center/cover no-repeat;
         }
+
+
         .form-container {
             max-width: 400px;
             background: rgba(0, 0, 0, 0.8);
@@ -21,19 +25,24 @@
             border-radius: 10px;
             color: #fff;
         }
+
         .form-label { font-weight: bold; }
         .form-control {
             background: rgba(255, 255, 255, 0.1);
             color: #fff;
         }
+
+
         .form-control:focus {
             background: rgba(255, 255, 255, 0.2);
             color: #fff;
         }
+
         .btn-primary {
             background-color: #007bff;
             border: none;
         }
+
     </style>
     <title>Admin Login</title>
 </head>
@@ -84,6 +93,7 @@
           ajaxValidationStatus.email = false;
         }
         validateForm();
+
       };
 
       xhttp.onerror = function() {
@@ -91,7 +101,7 @@
         validateForm();
       };
     }
-
+    testing
     </script>
 </body>
 </html>
